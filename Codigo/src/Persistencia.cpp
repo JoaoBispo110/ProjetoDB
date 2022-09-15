@@ -3,7 +3,7 @@
 #include <string>
 #include "Persistencia.h"
 
-#define DEBUG true
+#define DEBUG false
 
 using std::cout;
 using std::cerr;
@@ -224,6 +224,23 @@ bool Persistencia::Cadastrar(string email, string senha, string nome, string dat
 	}
 
 	return true;
+}
+
+void Persistencia::MostrarConta(string email, string* nome, string* senha, string* data){
+	string tabela("public.usuários");
+	vector<string> campos = {"nome_de_usuário", "senha", "data_de_nascimento"};
+	string clasula("email = '" + email + "'");
+
+	pqxx::result resultado = Consultar(tabela, campos, clasula);
+
+	*nome = resultado[0][0].as<string>();
+	*senha = resultado[0][1].as<string>();
+	if(!resultado[0][2].is_null()){
+		*data = resultado[0][2].as<string>();
+	}
+	else{
+		*data = "";
+	}
 }
 
 bool Persistencia::AtualizarConta(string email, string nome, string senha, string data, string og_email){

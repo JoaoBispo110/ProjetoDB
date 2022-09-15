@@ -100,6 +100,9 @@ void Interface::Login(){
 				m_se_tem_canal = m_persistencia->UserTemCanal(email);
 				return;
 			}
+			else{
+				cout << "Email ou senha errados!!!" << endl;
+			}
 		}
 
 	}while(true);
@@ -118,10 +121,11 @@ Options Interface::Menu(){
 		cout << "(L)ogOff" << endl;
 //		cout << "(M)andar Msgs" << endl;
 //		cout << "(C)hecar Msgs" << endl;
+		cout << "(AC) apresentar conta" << endl;
 		cout << "(U)pdate Conta" << endl;
 		cout << "(E)xcluir Conta" << endl;
 		if(!m_se_tem_canal){
-			cout << "(N)ovo Canal" << endl;
+//			cout << "(N)ovo Canal" << endl;
 		}
 		else if(m_se_tem_canal > 0){
 //			cout << "(V)ideos" << endl;
@@ -129,8 +133,8 @@ Options Interface::Menu(){
 //			cout << "(P)laylists" << endl;
 //			cout << "(A)udios" << endl;
 //			cout << "(R)ecomendacoes" << endl;
-			cout << "(MC) mudar canal" << endl;
-			cout << "(D)eletar Canal" << endl;
+//			cout << "(MC) mudar canal" << endl;
+//			cout << "(D)eletar Canal" << endl;
 		}
 		cout << "> ";
 		cout.flush();
@@ -148,6 +152,9 @@ Options Interface::Menu(){
 		}
 		else if((input == "C") || (input == "CHECAR MSGS")){
 			return Checar_Msgs;
+		}
+		else if((input == "AC") || (input == "APRESENTAR CONTA")){
+			return Mostrar_Conta;
 		}
 		else if((input == "U") || (input == "UPDATE CONTA")){
 			return Mudar_Conta;
@@ -187,6 +194,33 @@ Options Interface::Menu(){
 	}while(true);
 
 	return Sair;
+}
+
+void Interface::MostrarConta(){
+	string nome;
+	string senha;
+	string data;
+	string input;
+
+	m_persistencia->MostrarConta(m_user_email, &nome, &senha, &data);
+
+	do{
+		cout << "Pressione Enter para continuar..." << endl;
+		getchar();
+		system("clear");
+
+		cout << "'Esc': to exit" << endl;
+		cout << "Email: " << m_user_email << endl;
+		cout << "Nome: " << nome << endl;
+		cout << "Senha: " << senha << endl;
+		if(data != ""){
+			cout << "Data de Nascimento: " << data << endl;
+		}
+		cout << "> ";
+		cout.flush();
+		getline(cin, input);
+
+	}while(input.find(27) == -1);
 }
 
 void Interface::MudarConta(){
@@ -358,6 +392,7 @@ void Interface::ExcluirConta(){
 		cout << "> ";
 		cout.flush();
 		getline(cin, se_sim);
+		for (auto & c: se_sim) c = toupper(c);
 
 
 		if(se_sim.find(27) != -1){

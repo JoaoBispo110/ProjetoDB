@@ -25,6 +25,7 @@
 			bool Login(std::string email, std::string senha);
 			bool UserTemCanal(std::string email);
 			bool Cadastrar(std::string email, std::string senha, std::string nome, std::string data);
+			void MostrarConta(std::string email, std::string* nome, std::string* senha, std::string* data);
 			bool AtualizarConta(std::string email, std::string nome, std::string senha, std::string data, std::string og_email);
 			void DeletarConta(std::string email, std::string senha);
 	};

@@ -5,6 +5,7 @@
 
 	enum Options{
 		Log_Off,
+		Mostrar_Conta,
 		Mudar_Conta,
 		Excluir_Conta,
 		Novo_Canal,
@@ -38,6 +39,7 @@
 			static Interface& GetInstance();
 			void Login();
 			Options Menu();
+			void MostrarConta();
 			void MudarConta();
 			void ExcluirConta();
 			void CreateCanal();

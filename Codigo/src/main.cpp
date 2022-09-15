@@ -15,6 +15,9 @@ int main(){
 			case Log_Off:
 				interface->Login();
 				break;
+			case Mostrar_Conta:
+				interface->MostrarConta();
+				break;
 			case Mudar_Conta:
 				interface->MudarConta();
 				break;
